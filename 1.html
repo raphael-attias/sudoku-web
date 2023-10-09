@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<!-- La tête -->
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku</title>
+    <style>
+        body {text-align: center; background-color: darkcyan}
+        title {color: dimgray}
+        h1 {
+            font-size: 50px;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+        }
+        /* Style pour la case */
+        .button-container {
+            border: 2px solid lightgreen;
+            border-radius: 10px; /* Bordure arrondie */
+            display: inline-block;
+            padding: 10px; /* Espace intérieur autour du bouton */
+        }
+        /* Style pour le bouton */
+        #new-grid-button {
+            background-color: lightgreen;
+            border: none;
+            border-radius: 5px; /* Bordure arrondie */
+            padding: 10px 20px; /* Marge interne (haut/bas, gauche/droite) */
+            font-size: 18px;
+            cursor: pointer;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .empty-cell {
+            background-color: lightgray;
+        }
+
+        /* Style pour la grille de Sudoku */
+        .sudoku-grid {
+            border: 2px solid black;
+        }
+
+        /* Style plus grisé pour des bolcs de 3x3 (horizontale) */
+        .block-row {
+            border-bottom: 2px solid black;
+        }
+
+        /* Style pluls grisé pour des blocs de 3x3 (colones) */
+        .block-col {
+            border-right: 2px solid black;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Sudoku</h1>
+    <!-- Button -->
+    <div class="button-container">
+        <button id="new-grid-button">Nouvelle Grille</button>
+    </div>
+    <!-- Les colonnes -->
+    <table class="sudoku-grid">
+        <!-- 1 -->
+        <tr class="block-row block-col">
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+        </tr>
+        <!-- 2 -->
+        <tr class="block-row block-col">
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+        </tr>
+        <!-- 3 -->
+        <tr class="block-row block-col">
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+        </tr>
+        <!-- 4 -->
+        <tr class="block-row block-col">
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+        </tr>
+        <!-- 5 -->
+        <tr class="block-row block-col">
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+        </tr>
+        <!-- 6 -->
+        <tr class="block-row block-col">
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+        </tr>
+        <!-- 7 -->
+        <tr class="block-row block-col">
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+        </tr>
+        <!-- 8 -->
+        <tr class="block-row block-col">
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+        </tr>
+        <!-- 9 -->
+        <tr class="block-row block-col">
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-row"></td>
+            <td class="empty-cell block-col"></td>
+        </tr>
+    </table>   
+
+
+    
+    
+    
+    <!-- L'API-->
+    <script>
+     let grid = fetch('http///31.33.247.37:3000/api/sudoku')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                   return data;
+
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+    </script>
+</body>
+
+
+</html>
