@@ -1,6 +1,8 @@
+// Déclarez les variables globales.
 let sudokuData = null;
 let isSolved = false;
 
+// Séparez la logique de remplissage de la grille dans une fonction à part.
 function fillSudokuGrid() {
     const table = document.querySelector('.sudoku-grid');
 
@@ -9,34 +11,27 @@ function fillSudokuGrid() {
             const cell = table.rows[row].cells[col];
             const cellValue = sudokuData[row][col];
 
-            if (cellValue !== 0) {
-                // Remplissez la cellule avec la valeur de sudokuData.
-                cell.textContent = cellValue;
-            } else {
-                // Laissez les cases vides avec une valeur nulle.
-                cell.textContent = '';
-            }
+            // Utilisez le texte vide au lieu de la valeur 0 pour les cases vides.
+            cell.textContent = cellValue !== 0 ? cellValue : '';
         }
     }
 }
 
+// Écoutez les clics sur la grille pour permettre à l'utilisateur de remplir les cases vides.
 const sudokuGrid = document.querySelector('.sudoku-grid');
 
 sudokuGrid.addEventListener('click', function (e) {
     // Vérifiez si la case cliquée est vide et que la grille n'est pas résolue.
     if (!isSolved && e.target.classList.contains('initial-empty-cell')) {
-        const row = e.target.parentElement.rowIndex; // L'index de ligne de la case cliquée.
-        const col = e.target.cellIndex; // L'index de colonne de la case cliquée.
+        const row = e.target.parentElement.rowIndex;
+        const col = e.target.cellIndex;
 
         // Assurez-vous que la case est vide avant de permettre la saisie.
         if (sudokuData[row][col] === 0) {
-            // Utilisez une boîte de dialogue pour permettre à l'utilisateur de saisir un chiffre.
             const inputValue = prompt("Entrez un chiffre de 1 à 9 :", "");
             const number = parseInt(inputValue, 10);
 
-            // Assurez-vous que l'entrée est un chiffre valide de 1 à 9.
             if (!isNaN(number) && number >= 1 && number <= 9) {
-                // Mettez à jour la grille avec le chiffre saisi.
                 sudokuData[row][col] = number;
                 e.target.textContent = number;
             } else {
@@ -46,7 +41,6 @@ sudokuGrid.addEventListener('click', function (e) {
     }
 });
 
-
 // Fonction pour résoudre automatiquement la grille.
 function solveSudoku() {
     const emptyCell = findEmptyCell();
@@ -54,7 +48,7 @@ function solveSudoku() {
         // Toutes les cases sont remplies, la grille est déjà résolue.
         isSolved = true;
         alert("La grille est déjà résolue !");
-        return true; // Ajoutez un return true lorsque la grille est résolue.
+        return true;
     }
 
     const [row, col] = emptyCell;
@@ -62,7 +56,7 @@ function solveSudoku() {
     // Vérifie si l'API a été appelée pour obtenir une nouvelle grille de Sudoku.
     if (!sudokuData) {
         alert("Veuillez d'abord cliquer sur 'Nouvelle Grille' pour obtenir une grille de Sudoku.");
-        return false; // Ajoutez un return false lorsque la grille n'est pas disponible.
+        return false;
     }
 
     for (let num = 1; num <= 9; num++) {
@@ -87,11 +81,9 @@ function solveSudoku() {
     return false;
 }
 
+// Écoutez les clics sur le bouton "Nouvelle Grille" pour charger une nouvelle grille.
 const newGridButton = document.getElementById('new-grid-button');
-const solveButton = document.getElementById('solve-button');
-const verifyButton = document.getElementById('verify-button');
 
-// fonction clic pour le bouton "Nouvelle Grille".
 newGridButton.addEventListener('click', function () {
     // Appel à l'API pour récupérer une grille de Sudoku.
     fetch('http://31.33.247.37:3000/api/sudoku')
@@ -100,13 +92,16 @@ newGridButton.addEventListener('click', function () {
             sudokuData = data; // Stockez les données de la grille dans sudokuData.
             isSolved = false; // Réinitialisez l'état de la grille résolue.
             fillSudokuGrid(); // Remplissez la grille avec les nouvelles données.
+            solveSudoku(); // Ajout de cet appel pour résoudre la grille automatiquement.
         })
         .catch(err => {
             console.log(err);
         });
 });
 
-// fonction clic pour le bouton "Résoudre la Grille".
+// Écoutez les clics sur le bouton "Résoudre la Grille" pour résoudre la grille manuellement.
+const solveButton = document.getElementById('solve-button');
+
 solveButton.addEventListener('click', function () {
     if (isSolved) {
         alert("La grille est déjà résolue !");
@@ -114,12 +109,14 @@ solveButton.addEventListener('click', function () {
         if (!sudokuData) {
             alert("Veuillez d'abord cliquer sur 'Nouvelle Grille' pour obtenir une grille de Sudoku.");
         } else {
-            solveSudoku();
+            solveSudoku(); // Appel à la fonction pour résoudre la grille.
         }
     }
 });
 
-// fonction clic pour le bouton "Vérifier la Grille".
+// Écoutez les clics sur le bouton "Vérifier la Grille" pour vérifier la grille.
+const verifyButton = document.getElementById('verify-button');
+
 verifyButton.addEventListener('click', function () {
     if (isSolved) {
         alert("La grille est déjà résolue !");
@@ -141,3 +138,7 @@ function checkSudoku() {
     // Cette fonction dépendra de la structure de données que vous utilisez pour sudokuData.
     // Vous pouvez utiliser la logique que j'ai fournie précédemment pour la vérification.
 }
+
+// Initialisez la grille avec des données initiales si nécessaire.
+// Remplissez la grille avec les données initiales.
+// fillSudokuGrid();
