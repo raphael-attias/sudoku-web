@@ -1,3 +1,4 @@
+// Fonction pour résoudre automatiquement la grille.
 function solveSudoku() {
     const emptyCell = findEmptyCell();
     if (!emptyCell) {
@@ -8,7 +9,7 @@ function solveSudoku() {
     }
 
     const [row, col] = emptyCell;
-    
+
     // Vérifie si l'API a été appelée pour obtenir une nouvelle grille de Sudoku.
     if (!sudokuData) {
         alert("Veuillez d'abord cliquer sur 'Nouvelle Grille' pour obtenir une grille de Sudoku.");
@@ -22,12 +23,12 @@ function solveSudoku() {
             const cell = document.querySelector(".sudoku-grid").rows[row].cells[col];
             cell.textContent = num;
 
-            // Récursivement, essayez de résoudre le reste de la grille.
+            // Récursivement, essaye de résoudre le reste de la grille.
             if (solveSudoku()) {
                 return true;
             }
 
-            // Si le chiffre num ne conduit pas à une solution, annulez le mouvement.
+            // Si le chiffre num ne conduit pas à une solution, annule le mouvement.
             sudokuData[row][col] = 0;
             cell.textContent = "";
         }
