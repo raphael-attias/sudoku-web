@@ -1,3 +1,24 @@
+function fillSudokuGrid() {
+    const table = document.querySelector('.sudoku-grid');
+    const newGridButton = document.getElementById('new-grid-button');
+
+
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            const cell = table.rows[row].cells[col];
+            const cellValue = sudokuData[row][col];
+
+            if (cellValue !== 0) {
+                // Remplissz la cellule avec la valeur de sudokuData.
+                cell.textContent = cellValue;
+            } else {
+                // Laisse les cases vides avec une valeur nulle.
+                cell.textContent = '';
+            }
+        }
+    }
+}
+
 // Fonction pour résoudre automatiquement la grille.
 function solveSudoku() {
     const emptyCell = findEmptyCell();
@@ -22,11 +43,6 @@ function solveSudoku() {
             sudokuData[row][col] = num;
             const cell = document.querySelector(".sudoku-grid").rows[row].cells[col];
             cell.textContent = num;
-
-            // Récursivement, essaye de résoudre le reste de la grille.
-            if (solveSudoku()) {
-                return true;
-            }
 
             // Si le chiffre num ne conduit pas à une solution, annule le mouvement.
             sudokuData[row][col] = 0;
